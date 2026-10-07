@@ -18,6 +18,8 @@ O botão **Nova captura** e a tecla **Print Screen** capturam a tela principal. 
 
 As imagens PNG salvas ficam em `Imagens/PrintScraping` dentro da pasta de imagens do usuário. O OCR é executado no aplicativo; o texto não é enviado a um serviço remoto.
 
+No menu **File → Select folder to save**, escolha outro diretório para as próximas capturas. Essa preferência fica salva localmente para as próximas execuções. Arquivos já salvos não são movidos.
+
 ## Modo segundo plano
 
 Ative **Segundo plano** e feche a janela para ocultá-la. O processo continua ativo; pressione Print Screen para reabrir a janela e capturar a tela. Desative o modo para que fechar a janela encerre o aplicativo.
