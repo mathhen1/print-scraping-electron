@@ -1,4 +1,4 @@
-import { app, BrowserWindow, desktopCapturer, dialog, globalShortcut, ipcMain, Menu, nativeImage, OpenDialogOptions, screen } from 'electron';
+import { app, BrowserWindow, ClipboardItem, clipboard, desktopCapturer, dialog, globalShortcut, ipcMain, Menu, nativeImage, OpenDialogOptions, screen } from 'electron';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -151,15 +151,19 @@ app.whenReady().then(async () => {
     return filepath;
   });
   ipcMain.handle('image:copy', async (_event, dataUrl: string) => {
-    clipboardWriteImage(dataUrl);
+    await clipboardWriteImage(dataUrl);
     return true;
   });
 });
 
-function clipboardWriteImage(dataUrl: string): void {
-  // Lazy import keeps the renderer isolated from Electron APIs.
-  const { clipboard } = require('electron') as typeof import('electron');
-  clipboard.writeImage(nativeImage.createFromDataURL(dataUrl));
+async function clipboardWriteImage(dataUrl: string): Promise<void> {
+  const image = nativeImage.createFromDataURL(dataUrl);
+  if (image.isEmpty()) throw new Error('Imagem inválida para copiar.');
+  const png = image.toPNG();
+  const pngArrayBuffer = png.buffer.slice(png.byteOffset, png.byteOffset + png.byteLength) as ArrayBuffer;
+  await clipboard.write([
+    new ClipboardItem({ 'image/png': new Blob([pngArrayBuffer], { type: 'image/png' }) }),
+  ]);
 }
 
 app.on('activate', () => { showWindow(); });
