@@ -111,6 +111,19 @@ function App() {
     }
   };
 
+  const copyImage = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    setSelection(null);
+    draw(null);
+    try {
+      await window.printScraping.copyImage(canvas.toDataURL('image/png'));
+      setStatus('Imagem copiada. Você já pode colá-la em outro aplicativo.');
+    } catch (error) {
+      setStatus(`Não foi possível copiar a imagem: ${String(error)}`);
+    }
+  };
+
   const runOcr = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -156,6 +169,7 @@ function App() {
         <button className="primary" onClick={() => void window.printScraping.requestCapture()}>Nova captura <kbd>Print Screen</kbd></button>
         <button disabled={!hasImage} onClick={applyCrop}>Aplicar corte</button>
         <button disabled={!hasImage || !selection} onClick={() => { setSelection(null); draw(null); setStatus('Seleção removida.'); }}>Desfazer corte</button>
+        <button disabled={!hasImage} onClick={() => void copyImage()}>Copiar imagem</button>
         <button disabled={!hasImage || recognizing} onClick={() => void runOcr()}>{recognizing ? 'Lendo texto…' : 'Scraping: copiar texto'}</button>
         <button disabled={!hasImage} onClick={() => void saveImage()}>Salvar imagem</button>
       </section>
