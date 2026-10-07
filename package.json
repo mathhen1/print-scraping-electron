@@ -1,14 +1,19 @@
 {
   "name": "print-scraping",
+  "productName": "PrintScraping",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "description": "Captura, edição e leitura de screenshots localmente.",
   "main": "dist/main/main.js",
   "scripts": {
     "dev": "vite --config vite.config.ts",
     "build": "tsc -p tsconfig.electron.json && tsc --noEmit && vite build --config vite.config.ts",
     "start": "npm run build && electron .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "dist": "npm run build && electron-builder --win nsis"
   },
   "dependencies": {
     "tesseract.js": "^6.0.1",
@@ -17,10 +22,37 @@
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "electron": "^33.2.1",
+    "electron": "^44.6.0",
+    "electron-builder": "^26.17.0",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1"
+  },
+  "build": {
+    "appId": "com.printscraping.desktop",
+    "productName": "PrintScraping",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "artifactName": "${productName}-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "overrides": {
+    "app-builder-lib": {
+      "@electron/get": "5.1.0"
+    }
   }
 }
