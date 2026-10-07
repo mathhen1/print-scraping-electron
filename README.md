@@ -4,7 +4,7 @@ Aplicativo desktop pessoal para capturar screenshots, recortar imagens e extrair
 
 ## Requisitos
 
-- Node.js 20 ou superior
+- Node.js 22.12 ou superior
 - Windows, macOS ou Linux com ambiente gráfico
 
 ## Começar
@@ -13,6 +13,14 @@ Aplicativo desktop pessoal para capturar screenshots, recortar imagens e extrair
 npm install
 npm start
 ```
+
+Para gerar o instalador executável do Windows (`.exe`), execute:
+
+```bash
+npm run dist
+```
+
+O instalador será criado em `release/`.
 
 O botão **Nova captura** e a tecla **Print Screen** capturam a tela principal. Arraste sobre a imagem para selecionar uma região e use **Aplicar corte**. **Scraping: copiar texto** executa OCR em português e inglês. A primeira execução do OCR pode baixar os modelos de idioma.
 
