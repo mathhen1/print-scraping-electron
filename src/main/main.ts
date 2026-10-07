@@ -112,7 +112,12 @@ function showWindow(): BrowserWindow {
 }
 
 async function captureScreen(): Promise<void> {
-  const display = screen.getPrimaryDisplay();
+  let display = screen.getPrimaryDisplay();
+  try {
+    display = screen.getDisplayNearestPoint(screen.getCursorScreenPoint());
+  } catch {
+    // Some Linux display servers do not expose the global cursor position.
+  }
   const sources = await desktopCapturer.getSources({
     types: ['screen'],
     thumbnailSize: { width: display.size.width * display.scaleFactor, height: display.size.height * display.scaleFactor },
