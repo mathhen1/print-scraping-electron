@@ -15,6 +15,7 @@ function App() {
   const [hasImage, setHasImage] = useState(false);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [background, setBackground] = useState(false);
+  const [saveDirectory, setSaveDirectory] = useState('Imagens/PrintScraping');
   const [status, setStatus] = useState('As imagens são salvas em Imagens/PrintScraping.');
   const [text, setText] = useState('');
   const [showText, setShowText] = useState(false);
@@ -54,7 +55,18 @@ function App() {
     image.src = dataUrl;
   };
 
-  useEffect(() => window.printScraping.onCapture(loadCapture), []);
+  useEffect(() => {
+    const unsubscribeCapture = window.printScraping.onCapture(loadCapture);
+    const unsubscribeSaveDirectory = window.printScraping.onSaveDirectoryChanged((directory) => {
+      setSaveDirectory(directory);
+      setStatus(`Pasta de destino atualizada. Novas capturas serão salvas em ${directory}`);
+    });
+    void window.printScraping.getSaveDirectory().then(setSaveDirectory);
+    return () => {
+      unsubscribeCapture();
+      unsubscribeSaveDirectory();
+    };
+  }, []);
 
   const point = (event: PointerEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current!;
@@ -169,7 +181,7 @@ function App() {
         </div>
       </section>
       {showText && <section className="result"><div><h2>Texto reconhecido</h2><textarea rows={5} placeholder="O texto da imagem aparecerá aqui..." value={text} onChange={(event) => setText(event.target.value)} /></div><button disabled={!text} onClick={() => void copyText()}>Copiar texto</button></section>}
-      <footer>{status}</footer>
+      <footer>{status} · Pasta de destino: {saveDirectory}</footer>
     </main>
   </>;
 }
