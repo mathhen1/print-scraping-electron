@@ -1,0 +1,28 @@
+:root { color-scheme: dark; font-family: Inter, "Segoe UI", sans-serif; background: #111318; color: #f3f4f6; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 640px; min-height: 100vh; }
+header { display: flex; align-items: center; justify-content: space-between; padding: 24px 32px 20px; border-bottom: 1px solid #292c34; }
+h1, h2, p { margin: 0; }
+h1 { font-size: 20px; letter-spacing: -.03em; }
+header p { margin-top: 5px; color: #9298a5; font-size: 13px; }
+.background-toggle { display: flex; align-items: center; gap: 9px; color: #c4c8d0; font-size: 13px; }
+input { accent-color: #78a9ff; }
+main { display: flex; flex-direction: column; min-height: calc(100vh - 83px); padding: 22px 32px; gap: 18px; }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+button { border: 1px solid #393d47; border-radius: 7px; background: #20232a; color: #e9eaf0; padding: 9px 12px; font: inherit; font-size: 12px; cursor: pointer; }
+button:hover:not(:disabled) { background: #2b2f38; }
+button:disabled { opacity: .42; cursor: default; }
+button.primary { background: #477ce3; border-color: #477ce3; }
+button.primary:hover { background: #5a8bee; }
+kbd { border: 1px solid #575d69; background: #343842; color: #d4d7de; border-radius: 4px; padding: 2px 5px; font: inherit; font-size: 10px; }
+.workspace { display: grid; place-items: center; flex: 1; min-height: 310px; overflow: auto; border: 1px solid #292c34; border-radius: 10px; background: #17191f; }
+.empty { text-align: center; padding: 30px; color: #9ba1ad; }
+.empty-icon { margin-bottom: 12px; color: #78a9ff; font-size: 32px; }
+.empty h2, .result h2 { margin-bottom: 8px; color: #e8eaf0; font-size: 15px; }
+.empty p { font-size: 13px; }
+.image-wrap { max-width: 100%; max-height: 100%; padding: 16px; }
+canvas { display: block; max-width: 100%; max-height: calc(100vh - 220px); object-fit: contain; cursor: crosshair; touch-action: none; }
+.result { display: flex; align-items: flex-end; gap: 12px; }
+.result > div { flex: 1; }
+textarea { width: 100%; resize: vertical; border: 1px solid #393d47; border-radius: 7px; padding: 10px; background: #191b21; color: #e9eaf0; font: 13px/1.5 "Segoe UI", sans-serif; }
+footer { color: #858b98; font-size: 11px; }
